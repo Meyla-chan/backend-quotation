@@ -3,6 +3,7 @@ package routes
 import "github.com/gin-gonic/gin"
 
 func SetupRoutes(r *gin.Engine) {
-	CompanyRoutes(r)
-	EmployeeRoutes(r)
+    CompanyRoutes(r)
+    EmployeeRoutes(r)
+    RegisterBankAccountRoutes(r) // Pastikan ini terpanggil
 }
