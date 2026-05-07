@@ -12,8 +12,7 @@ import (
 // 1. READ ALL (Mengambil semua data bank)
 func GetBankAccounts(c *gin.Context) {
 
-	var bankAccounts []models.BankAccount
-
+	var accounts []models.BankAccount
 	page := c.DefaultQuery("page", "1")
 	limit := c.DefaultQuery("limit", "10")
 
@@ -41,12 +40,12 @@ func GetBankAccounts(c *gin.Context) {
 	})
 
 	// Menggunakan GORM .Find() untuk menggantikan SELECT dan perulangan rows.Next() yang panjang
-	if err := config.DB.Find(&bankAccounts).Error; err != nil {
+	if err := config.DB.Find(&accounts).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, bankAccounts)
+	c.JSON(http.StatusOK, accounts)
 }
 
 // 2. READ BY ID (Mengambil data bank berdasarkan ID tertentu)

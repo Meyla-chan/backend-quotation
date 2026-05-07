@@ -46,7 +46,7 @@ func GetBankAccounts(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, bankAccounts)
+	c.JSON(http.StatusOK, accounts)
 }
 
 // 2. READ BY ID (Mengambil data bank berdasarkan ID tertentu)

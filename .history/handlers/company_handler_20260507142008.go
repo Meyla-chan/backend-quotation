@@ -3,7 +3,6 @@ package handlers
 import (
 	"backend-quotation/config"
 	"backend-quotation/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,7 +44,7 @@ func GetCompanyByID(c *gin.Context) {
 func GetCompanies(c *gin.Context) {
 	var companies []models.Company
 
-	page := c.DefaultQuery("page", "1")
+		page := c.DefaultQuery("page", "1")
 	limit := c.DefaultQuery("limit", "10")
 
 	var pageInt int

@@ -3,7 +3,6 @@ package handlers
 import (
 	"backend-quotation/config"
 	"backend-quotation/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

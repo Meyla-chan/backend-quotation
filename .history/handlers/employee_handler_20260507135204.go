@@ -3,7 +3,6 @@ package handlers
 import (
 	"backend-quotation/config"
 	"backend-quotation/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -31,34 +30,7 @@ func CreateEmployee(c *gin.Context) {
 func GetEmployees(c *gin.Context) {
 	var employees []models.Employee
 
-	// ambil query parameter
-	page := c.DefaultQuery("page", "1")
-	limit := c.DefaultQuery("limit", "10")
-
-	var pageInt int
-	var limitInt int
-
-	fmt.Sscanf(page, "%d", &pageInt)
-	fmt.Sscanf(limit, "%d", &limitInt)
-
-	// hitung offset
-	offset := (pageInt - 1) * limitInt
-
-	// query pagination
-	if err := config.DB.
-		Limit(limitInt).
-		Offset(offset).
-		Find(&employees).Error; err != nil {
-
-		c.JSON(500, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{
-		"page":  pageInt,
-		"limit": limitInt,
-		"data":  employees,
-	})
+	
 
 	// Menggunakan GORM .Find() langsung memetakan semua isi tabel ke slice struct
 	if err := config.DB.Find(&employees).Error; err != nil {

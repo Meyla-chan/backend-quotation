@@ -3,7 +3,6 @@ package handlers
 import (
 	"backend-quotation/config"
 	"backend-quotation/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,32 +44,8 @@ func GetCompanyByID(c *gin.Context) {
 func GetCompanies(c *gin.Context) {
 	var companies []models.Company
 
-	page := c.DefaultQuery("page", "1")
-	limit := c.DefaultQuery("limit", "10")
 
-	var pageInt int
-	var limitInt int
-
-	fmt.Sscanf(page, "%d", &pageInt)
-	fmt.Sscanf(limit, "%d", &limitInt)
-
-	offset := (pageInt - 1) * limitInt
-
-	if err := config.DB.
-		Limit(limitInt).
-		Offset(offset).
-		Find(&companies).Error; err != nil {
-
-		c.JSON(500, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{
-		"page":  pageInt,
-		"limit": limitInt,
-		"data":  companies,
-	})
-
+	
 	// Menggunakan GORM .Find() untuk langsung menarik semua record tanpa loop rows.Next()
 	if err := config.DB.Find(&companies).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

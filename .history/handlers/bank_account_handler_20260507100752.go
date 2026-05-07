@@ -3,7 +3,6 @@ package handlers
 import (
 	"backend-quotation/config"
 	"backend-quotation/models"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,42 +10,15 @@ import (
 
 // 1. READ ALL (Mengambil semua data bank)
 func GetBankAccounts(c *gin.Context) {
-
-	var bankAccounts []models.BankAccount
-
-	page := c.DefaultQuery("page", "1")
-	limit := c.DefaultQuery("limit", "10")
-
-	var pageInt int
-	var limitInt int
-
-	fmt.Sscanf(page, "%d", &pageInt)
-	fmt.Sscanf(limit, "%d", &limitInt)
-
-	offset := (pageInt - 1) * limitInt
-
-	if err := config.DB.
-		Limit(limitInt).
-		Offset(offset).
-		Find(&bankAccounts).Error; err != nil {
-
-		c.JSON(500, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(200, gin.H{
-		"page":  pageInt,
-		"limit": limitInt,
-		"data":  bankAccounts,
-	})
+	var accounts []models.BankAccount
 
 	// Menggunakan GORM .Find() untuk menggantikan SELECT dan perulangan rows.Next() yang panjang
-	if err := config.DB.Find(&bankAccounts).Error; err != nil {
+	if err := config.DB.Find(&accounts).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, bankAccounts)
+	c.JSON(http.StatusOK, accounts)
 }
 
 // 2. READ BY ID (Mengambil data bank berdasarkan ID tertentu)
@@ -97,7 +69,7 @@ func CreateBankAccount(c *gin.Context) {
 		return
 	}
 
-	// Menggunakan GORM .Create() untuk menyimpan objek data baru.
+	// Menggunakan GORM .Create() untuk menyimpan objek data baru. 
 	// ID baru akan otomatis terisi ke dalam objek 'a' setelah berhasil disimpan.
 	if err := config.DB.Create(&a).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
