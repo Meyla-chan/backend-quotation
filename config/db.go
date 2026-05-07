@@ -1,26 +1,27 @@
 package config
 
 import (
-	"database/sql"
 	"log"
 
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+// DB sekarang bertipe *gorm.DB, bukan *sql.DB lagi
+var DB *gorm.DB
 
 func ConnectDB() {
-	connStr := "host=localhost port=5432 user=postgres password=postgres16112004 dbname=quotation_db sslmode=disable"
+	// 1. Ambil string koneksi database milikmu kemarin
+	dsn := "host=localhost port=5432 user=postgres password=postgres16112004 dbname=quotation_db sslmode=disable"
 
-	db, err := sql.Open("postgres", connStr)
+	// 2. Buka koneksi menggunakan GORM dan driver postgres bawaan GORM
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Gagal koneksi ke database menggunakan GORM:", err)
 	}
 
-	err = db.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.Println("Hore! Koneksi database menggunakan GORM Berhasil!")
 
+	// 3. Simpan koneksi ke variabel global DB agar bisa dipakai di handler/repository
 	DB = db
 }
