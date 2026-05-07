@@ -26,7 +26,7 @@ func CreateEmployee(c *gin.Context) {
 	c.JSON(http.StatusOK, emp)
 }
 
-
+<<<<<<< HEAD
 func GetEmployees(c *gin.Context) {
 	rows, err := config.DB.Query("SELECT id, name, email, phone, company_id FROM employees")
 	if err != nil {
@@ -140,7 +140,7 @@ func DeleteEmployee(c *gin.Context) {
 
 	c.JSON(200, gin.H{"message": "Employee deleted"})
 }
-
+=======
 // 2. READ ALL (Mengambil Semua Data Employee)
 func GetEmployees(c *gin.Context) {
 	var employees []models.Employee

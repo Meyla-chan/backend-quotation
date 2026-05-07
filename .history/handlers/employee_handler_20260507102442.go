@@ -26,7 +26,7 @@ func CreateEmployee(c *gin.Context) {
 	c.JSON(http.StatusOK, emp)
 }
 
-
+<<<<<<< HEAD
 func GetEmployees(c *gin.Context) {
 	rows, err := config.DB.Query("SELECT id, name, email, phone, company_id FROM employees")
 	if err != nil {

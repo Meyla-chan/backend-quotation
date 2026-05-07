@@ -15,6 +15,6 @@ func EmployeeRoutes(r *gin.Engine) {
 	r.DELETE("/employees/:id", handlers.DeleteEmployee)  
 
 }
-
-
-
+=======
+}
+>>>>>>> 1d842f5a8d4645f8c6dbd7bb093aa3fa6d8be12a

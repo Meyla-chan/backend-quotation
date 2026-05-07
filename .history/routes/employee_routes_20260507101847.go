@@ -17,4 +17,3 @@ func EmployeeRoutes(r *gin.Engine) {
 }
 
 
-
