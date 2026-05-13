@@ -26,3 +26,5 @@ type QuotationItem struct {
 	Price       float64 `json:"price"`
 	Total       float64 `json:"total"`
 }
+
+
